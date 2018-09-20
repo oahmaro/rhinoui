@@ -56,5 +56,11 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "dependencies": {
+    "color": "^3.0.0",
+    "emotion": "^9.2.10",
+    "emotion-theming": "^9.2.9",
+    "react-emotion": "^9.2.10"
+  }
 }
