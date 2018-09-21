@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-
-import ExampleComponent from 'rhinoui'
+import { Rhino } from 'rhinoui'
+import ButtonTesting from './ButtonsTesting'
 
 export default class App extends Component {
   render () {
     return (
-      <div>
-        <ExampleComponent text='Modern React component module' />
-      </div>
+        <Rhino lang='en' theme='dark'>
+          <ButtonTesting />
+        </Rhino>
     )
   }
 }

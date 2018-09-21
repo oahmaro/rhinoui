@@ -12,9 +12,9 @@ const DesignData = {
       },
       state: {
         key: '#26AA91',
-        success: '',
-        warning: '#E2C08C',
-        error: '#9E2626'
+        success: '#72b55f',
+        warning: '#f58229',
+        error: '#d82b2b'
       },
       ui: {
         fill1: '#111213',
@@ -26,6 +26,20 @@ const DesignData = {
         fill7: '#2A2F33',
         fill8: '#31363A',
         fill9: '#313B43'
+      },
+      tags: {
+        red: '#b84243',
+        orange: '#b7651c',
+        yellow: '#d6af0b',
+        olive: '#355948',
+        green: '#6fb544',
+        teal: '#1f7c73',
+        blue: '#255066',
+        violet: '#3b3270',
+        purple: '#613855',
+        pink: '#993977',
+        brown: '#562e2e',
+        grey: '#6d6d6d'
       }
     },
     light: {
@@ -51,6 +65,20 @@ const DesignData = {
         fill7: '#678C99',
         fill8: '#517C8A',
         fill9: '#3C6B7C'
+      },
+      tags: {
+        fill1: '#0079bf',
+        fill2: '#613855',
+        fill3: '#562e2e',
+        fill4: '#477484',
+        fill5: '#b7651c',
+        fill6: '#b84243',
+        fill7: '#6fb544',
+        fill8: '#6d6d6d',
+        fill9: '#255066',
+        fill10: '#d6af0b',
+        fill11: '#b48742',
+        fill12: '#355948'
       }
     }
   },
