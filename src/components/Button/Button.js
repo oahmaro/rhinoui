@@ -18,7 +18,7 @@ const colors = ({ theme, color, custom }) => css`
     background: ${theme.color(theme.colors.tags[color]).darken(0.1).string()};
     ${custom.color.active};
   }
-  ${custom.color.active};
+  ${custom.color};
 `
 
 const buttonActive = ({ theme, custom, primary, secondary, basic, success, warning, error, color }) => css`
@@ -29,12 +29,12 @@ const buttonActive = ({ theme, custom, primary, secondary, basic, success, warni
     (error && theme.color(theme.colors.state.error).lighten(0.1).string()) ||
     (basic && 'unset') ||
     (color && theme.color(theme.colors.tags[color]).lighten(0.1).string()) ||
-    theme.color(theme.colors.ui.fill7).lighten(0.2).string()};
+    theme.color(theme.colors.ui.fill6).lighten(0.2).string()};
   color: ${((primary || success || warning || error) && theme.colors.text.base) ||
     (secondary && theme.color(theme.colors.state.key).lighten(0.2).string()) ||
     theme.colors.text.primary};
   border-color: ${(primary && theme.colors.state.warning) || theme.colors.state.key};
-  border-width: 1px;
+  border-width: 2px;
   border-style: solid;
   fill: ${theme.colors.text.primary};
   ${custom.active};
@@ -54,7 +54,7 @@ const buttonCircular = css`
   height: 50px;
 `
 
-const buttonSuccess = ({ theme }) => css`
+const buttonSuccess = ({ theme, custom }) => css`
   color: ${theme.colors.text.base};
   fill: ${theme.colors.text.base};
   background: ${theme.colors.state.success};
@@ -63,22 +63,26 @@ const buttonSuccess = ({ theme }) => css`
     color: ${theme.colors.text.base};
     fill: ${theme.colors.text.base};
     border-color: ${theme.colors.state.key};
-    border-width: 1px;
+    border-width: 2px;
     border-style: solid;
+    ${custom.success.focus}
   }
   &:hover {
     background: ${theme.color(theme.colors.state.success).lighten(0.1).string()};
     color: ${theme.colors.text.base};
     fill: ${theme.colors.text.base};
+    ${custom.success.hover}
   }
   &:active {
     background: ${theme.color(theme.colors.state.success).darken(0.2).string()};
     color: ${theme.colors.text.base};
     fill: ${theme.colors.text.base};
+    ${custom.success.active}
   }
+  ${custom.success}
 `
 
-const buttonWarning = ({ theme }) => css`
+const buttonWarning = ({ theme, custom }) => css`
   color: ${theme.colors.text.base};
   fill: ${theme.colors.text.base};
   background: ${theme.colors.state.warning};
@@ -87,22 +91,26 @@ const buttonWarning = ({ theme }) => css`
     color: ${theme.colors.text.base};
     fill: ${theme.colors.text.base};
     border-color: ${theme.colors.state.key};
-    border-width: 1px;
+    border-width: 2px;
     border-style: solid;
+    ${custom.warning.focus}
   }
   &:hover {
     background: ${theme.color(theme.colors.state.warning).lighten(0.1).string()};
     color: ${theme.colors.text.base};
     fill: ${theme.colors.text.base};
+    ${custom.warning.hover}
   }
   &:active {
     background: ${theme.color(theme.colors.state.warning).darken(0.2).string()};
     color: ${theme.colors.text.base};
     fill: ${theme.colors.text.base};
+    ${custom.warning.active}
   }
+  ${custom.warning}
 `
 
-const buttonError = ({ theme }) => css`
+const buttonError = ({ theme, custom }) => css`
   color: ${theme.colors.text.base};
   fill: ${theme.colors.text.base};
   background: ${theme.colors.state.error};
@@ -111,19 +119,23 @@ const buttonError = ({ theme }) => css`
     color: ${theme.colors.text.base};
     fill: ${theme.colors.text.base};
     border-color: ${theme.colors.state.key};
-    border-width: 1px;
+    border-width: 2px;
     border-style: solid;
+    ${custom.error.focus}
   }
   &:hover {
     background: ${theme.color(theme.colors.state.error).lighten(0.1).string()};
     color: ${theme.colors.text.base};
     fill: ${theme.colors.text.base};
+    ${custom.error.hover}
   }
   &:active {
     background: ${theme.color(theme.colors.state.error).darken(0.2).string()};
     color: ${theme.colors.text.base};
     fill: ${theme.colors.text.base};
+    ${custom.error.active}
   }
+  ${custom.error}
 `
 
 const buttonPrimary = ({ theme, custom }) => css`
@@ -133,8 +145,8 @@ const buttonPrimary = ({ theme, custom }) => css`
     background: ${theme.color(theme.colors.state.key).lighten(0.2).string()};
     color: ${theme.colors.text.base};
     fill: ${theme.colors.text.base};
-    border-color: #E2C08C;
-    border-width: 1px;
+    border-color: ${theme.colors.state.warning};
+    border-width: 2px;
     border-style: solid;
     ${custom.primary.focus};
   }
@@ -156,9 +168,12 @@ const buttonPrimary = ({ theme, custom }) => css`
 const buttonSecondary = ({ theme, custom }) => css`
   background: unset;
   color: ${theme.colors.state.key};
+  border-color: transparent;
+  border-style: solid;
+  border-width: 2px;
   &:focus {
-    border: none;
     background: unset;
+    border-color: transparent;
     color: ${theme.color(theme.colors.state.key).lighten(0.2).string()};
     fill: ${theme.color(theme.colors.state.key).lighten(0.2).string()};
     ${custom.secondary.focus};
@@ -203,34 +218,34 @@ const buttonBasic = ({ theme, custom }) => css`
 
 const button = ({ theme }) => css`
   vertical-align: middle;
-  width: 70px;
-  height: 30px;
+  min-width: 70px;
+  min-height: 30px;
   cursor: pointer;
   user-select: none;
   font-family: ${theme.font};
-  background: ${theme.colors.ui.fill7};
+  background: ${theme.colors.ui.fill6};
   color: ${theme.colors.text.primary};
   border-color: transparent;
-  border-width: 1px;
+  border-width: 2px;
   border-style: solid;
   border-radius: ${theme.borderRadius.xs};
   box-sizing: border-box;
   &:focus {
-    border-color: ${theme.colors.state.key};
-    border-width: 1px;
+    border-color: ${theme.colors.state.lightKey};
+    border-width: 2px;
     border-style: solid;
-    background: ${theme.color(theme.colors.ui.fill7).lighten(0.3).string()};
+    background: ${theme.color(theme.colors.ui.fill6).lighten(0.3).string()};
     color: ${theme.colors.text.primary};
     fill: ${theme.colors.text.primary};
     outline: none;
   }
   &:hover {
     color: ${theme.colors.text.primary};
-    background: ${theme.color(theme.colors.ui.fill7).lighten(0.3).string()};
+    background: ${theme.color(theme.colors.ui.fill6).lighten(0.3).string()};
   }
   &:active {
     color: ${theme.color(theme.colors.text.primary).darken(0.2).string()};
-    background: ${theme.color(theme.colors.ui.fill7).darken(0.1).string()};
+    background: ${theme.color(theme.colors.ui.fill6).darken(0.1).string()};
   }
   &::selection {
     color: ${theme.colors.text.base};
@@ -241,10 +256,10 @@ const button = ({ theme }) => css`
 const StyledButton = styled('button')`
   ${button};
   ${props => props.circular && buttonCircular};
-  ${props => props.primary && buttonPrimary};
-  ${props => props.secondary && buttonSecondary};
   ${props => props.basic && buttonBasic};
   ${props => props.color && colors};
+  ${props => props.primary && buttonPrimary};
+  ${props => props.secondary && buttonSecondary};
   ${props => props.success && buttonSuccess};
   ${props => props.warning && buttonWarning};
   ${props => props.error && buttonError};
@@ -288,7 +303,6 @@ Button.propTypes = {
     'green',
     'teal',
     'blue',
-    'violet',
     'purple',
     'pink',
     'brown',
