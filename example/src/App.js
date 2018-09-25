@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Rhino } from 'rhinoui'
+import { Rhino, Button } from 'rhinoui'
 import ButtonTesting from './ButtonsTesting'
 
 export default class App extends Component {

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button } from 'rhinoui'
 import styled from 'react-emotion'
+import { withTheme }  from 'emotion-theming'
 
 const StyledTags = styled(Button)`
   min-height: unset;
@@ -12,7 +13,7 @@ const StyledTags = styled(Button)`
   border-radius: 0;
 `
 
-const ButtonTesting = (props) => {
+const ButtonTesting = ({ theme }) => {
     return (
         <div style={{background: '#1d1f23', height: '100vh'}}>
         <div>
@@ -37,7 +38,20 @@ const ButtonTesting = (props) => {
         </div>
         <div style={{paddingTop: '10px'}}>
           <Button success>Success</Button>
-          <Button warning>Warning</Button>
+          <Button warning custom={{
+            warning: {
+              color: theme.colors.text.disabled,
+              hover: {
+                color: theme.colors.text.disabled
+              },
+              active: {
+                color: theme.colors.text.disabled
+              },
+              focus: {
+                color: theme.colors.text.disabled
+              }
+            }
+          }}>Warning</Button>
           <Button error>Error</Button>
           <Button></Button>
         </div>
@@ -49,7 +63,6 @@ const ButtonTesting = (props) => {
           <StyledTags color='green'></StyledTags>
           <StyledTags color='teal'></StyledTags>
           <StyledTags color='blue'></StyledTags>
-          <StyledTags color='violet'></StyledTags>
           <StyledTags color='purple'></StyledTags>
           <StyledTags color='pink'></StyledTags>
           <StyledTags color='brown'></StyledTags>
@@ -59,4 +72,4 @@ const ButtonTesting = (props) => {
     )
 }
 
-export default ButtonTesting
+export default withTheme(ButtonTesting)
