@@ -1,84 +1,77 @@
-// Design Data used by rhinoui library to manipulate colors, sizes, langauge
+import colors from './colors'
 
+// Design Data used by rhinoui library to manipulate colors, sizes, langauge
 const DesignData = {
   theme: {
     dark: {
       text: {
-        base: '#ffffff',
-        primary: '#cccccb',
-        secondary: '#808080',
-        disabled: '#515151',
-        other: '#9e9d9e'
+        base: colors['gr50'],
+        primary: colors['gr75'],
+        secondary: colors['gr200'],
+        disabled: colors['gr400']
       },
       state: {
-        key: '#26AA91',
-        success: '#72b55f',
-        warning: '#f58229',
-        error: '#d82b2b'
+        key: colors['pg200'],
+        lightKey: colors['pg100'],
+        success: colors['g200'],
+        warning: colors['y100'],
+        error: colors['r200']
       },
       ui: {
-        fill1: '#111213',
-        fill2: '#191919',
-        fill3: '#1D1F23',
-        fill4: '#212326',
-        fill5: '#26292B',
-        fill6: '#24292E',
-        fill7: '#2A2F33',
-        fill8: '#31363A',
-        fill9: '#313B43'
+        fill1: colors['rd500'],
+        fill2: colors['rd400'],
+        fill3: colors['rd300'],
+        fill4: colors['rd200'],
+        fill5: colors['rd100'],
+        fill6: colors['rd75']
       },
       tags: {
-        red: '#b84243',
-        orange: '#b7651c',
-        yellow: '#d6af0b',
-        olive: '#355948',
-        green: '#6fb544',
-        teal: '#1f7c73',
-        blue: '#255066',
-        violet: '#3b3270',
-        purple: '#613855',
-        pink: '#993977',
-        brown: '#562e2e',
-        grey: '#6d6d6d'
+        red: colors['r200'],
+        orange: colors['or200'],
+        yellow: colors['y200'],
+        olive: colors['ol200'],
+        green: colors['g200'],
+        teal: colors['t200'],
+        blue: colors['b200'],
+        purple: colors['pu200'],
+        pink: colors['pi200'],
+        brown: colors['or500'],
+        grey: colors['gr200']
       }
     },
     light: {
       text: {
-        key: '#26AA91',
-        success: '',
-        warning: '',
-        error: ''
+        base: colors['gr900'],
+        primary: colors['gr300'],
+        secondary: colors['gr200'],
+        disabled: colors['gr100']
       },
       state: {
-        key: '',
-        success: '',
-        warning: '',
-        error: ''
+        key: colors['pg100'],
+        success: colors['g100'],
+        warning: colors['y300'],
+        error: colors['r300']
       },
       ui: {
-        fill1: '#0B303D',
-        fill2: '#E9EEF0',
-        fill3: '#BECDD3',
-        fill4: '#A8BDC4',
-        fill5: '#92ADB6',
-        fill6: '#7D9CA7',
-        fill7: '#678C99',
-        fill8: '#517C8A',
-        fill9: '#3C6B7C'
+        fill1: colors['rl500'],
+        fill2: colors['gr50'],
+        fill3: colors['gr75'],
+        fill4: colors['gr25'],
+        fill5: colors[''],
+        fill6: colors['gr100']
       },
       tags: {
-        fill1: '#0079bf',
-        fill2: '#613855',
-        fill3: '#562e2e',
-        fill4: '#477484',
-        fill5: '#b7651c',
-        fill6: '#b84243',
-        fill7: '#6fb544',
-        fill8: '#6d6d6d',
-        fill9: '#255066',
-        fill10: '#d6af0b',
-        fill11: '#b48742',
-        fill12: '#355948'
+        red: colors['r200'],
+        orange: colors['or200'],
+        yellow: colors['y200'],
+        olive: colors['ol200'],
+        green: colors['g200'],
+        teal: colors['t200'],
+        blue: colors['b200'],
+        purple: colors['pu200'],
+        pink: colors['pi200'],
+        brown: colors['or500'],
+        grey: colors['gr200']
       }
     }
   },
@@ -94,7 +87,7 @@ const DesignData = {
         xl: '22px',
         xxl: '24px'
       },
-      fontFamily: 'Roboto, Georgia, serif, Palatino Linotype, Book Antiqua, Palatino, Times New Roman, Times, Noto Kufi Arabic, Noto Naskh Arabic, Noto Sans Arabic'
+      fontFamily: 'Roboto, Noto Kufi Arabic'
     },
     ar: {
       fontSize: {
@@ -107,7 +100,7 @@ const DesignData = {
         xl: '21px',
         xxl: '23px'
       },
-      fontFamily: 'Noto Kufi Arabic, Noto Naskh Arabic, Noto Sans Arabic, Roboto, Georgia, serif, Palatino Linotype, Book Antiqua, Palatino, Times New Roman, Times'
+      fontFamily: 'Noto Kufi Arabic, Roboto'
     }
   },
   breakpoints: {
