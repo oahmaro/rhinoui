@@ -7,15 +7,15 @@ const colors = ({ theme, color, custom }) => css`
   background: ${theme.colors.tags[color]};
   &:focus {
     color: ${theme.colors.text.base};
-    background: ${theme.color(theme.colors.tags[color]).lighten(0.3).string()};
+    background: ${theme.color(theme.colors.tags[color] || color).lighten(0.3).string()};
     ${custom.color.focus};
   }
   &:hover {
-    background: ${theme.color(theme.colors.tags[color]).lighten(0.3).string()};
+    background: ${theme.color(theme.colors.tags[color] || color).lighten(0.3).string()};
     ${custom.color.hover};
   }
   &:active {
-    background: ${theme.color(theme.colors.tags[color]).darken(0.1).string()};
+    background: ${theme.color(theme.colors.tags[color] || color).darken(0.1).string()};
     ${custom.color.active};
   }
   ${custom.color};
@@ -295,19 +295,7 @@ Button.propTypes = {
   success: PropTypes.bool,
   warning: PropTypes.bool,
   error: PropTypes.bool,
-  color: PropTypes.oneOf([
-    'red',
-    'orange',
-    'yellow',
-    'olive',
-    'green',
-    'teal',
-    'blue',
-    'purple',
-    'pink',
-    'brown',
-    'grey'
-  ])
+  color: PropTypes.string
 }
 
 Button.defaultProps = {
