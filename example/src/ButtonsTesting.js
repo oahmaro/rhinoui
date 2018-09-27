@@ -15,7 +15,7 @@ const StyledTags = styled(Button)`
 
 const ButtonTesting = ({ theme }) => {
     return (
-        <div style={{background: '#1d1f23', height: '100vh'}}>
+        <div>
         <div>
           <Button primary>CREATE</Button>
         </div> 
@@ -56,7 +56,7 @@ const ButtonTesting = ({ theme }) => {
           <Button></Button>
         </div>
         <div style={{paddingTop: '10px'}}>
-          <StyledTags color='red'></StyledTags>
+          <StyledTags disabled primary color='red'></StyledTags>
           <StyledTags color='orange'></StyledTags>
           <StyledTags color='yellow'></StyledTags>
           <StyledTags color='olive'></StyledTags>
