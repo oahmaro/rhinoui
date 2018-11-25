@@ -7,7 +7,7 @@
 ## Install
 
 ```bash
-npm install --save rhinoui
+npm install rhinoui
 ```
 
 ## Usage
@@ -15,12 +15,16 @@ npm install --save rhinoui
 ```jsx
 import React, { Component } from 'react'
 
-import MyComponent from 'rhinoui'
+import { Box, Button } from 'rhinoui'
 
 class Example extends Component {
-  render () {
+  render() {
     return (
-      <MyComponent />
+      <Box flexDirection='row'>
+        <Button icon='like' iconColor='red' />
+        <Button icon='close' iconColor='green' />
+        <Button icon='comment' iconColor='blue' />
+      </Box>
     )
   }
 }
