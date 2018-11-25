@@ -5,19 +5,23 @@ const DesignData = {
   theme: {
     dark: {
       text: {
-        base: colors['gr50'],
-        primary: colors['gr75'],
+        dark: colors['gr600'],
+        disabled: colors['gr400'],
         secondary: colors['gr200'],
-        disabled: colors['gr400']
+        base: colors['gr100'],
+        primary: colors['gr75'],
+        light1: colors['gr50'],
+        light2: colors['gr25']
       },
       state: {
         key: colors['pg200'],
-        lightKey: colors['pg100'],
         success: colors['g200'],
-        warning: colors['y100'],
-        error: colors['r200']
+        warning1: colors['y200'],
+        error: colors['r200'],
+        warning2: colors['y100']
       },
       ui: {
+        fill0: colors['gr950'],
         fill1: colors['rd500'],
         fill2: colors['rd400'],
         fill3: colors['rd300'],
