@@ -16,6 +16,7 @@ const flex = {
     flex,
     alignSelf
   }) => css`
+    label: flex;
     flex-direction: ${flexDirection};
     flex-wrap: ${flexWrap};
     flex-flow: ${flexFlow};

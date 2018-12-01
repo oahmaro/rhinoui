@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 const text = {
   props: ({
     theme,
+    color,
     textOverflow,
     textDirection,
     textDecoration,
@@ -13,8 +14,29 @@ const text = {
     textIndent,
     textTransform,
     textShadow,
-    userSelect
+    userSelect,
+    textLighten,
+    textDarken,
+    textOpacity,
+    fontSize,
+    fontStyle,
+    fontWeight,
+    _color = (prop, lighten = 0, darken = 0, opacity = 1) => {
+      const c = theme
+        .color(
+          theme.colors.tags[prop] ||
+            theme.colors.ui[prop] ||
+            theme.colors.text[prop] ||
+            theme.colors.state[prop] ||
+            prop
+        )
+        .darken(darken)
+        .lighten(lighten)
+      return `rgba(${c.red()}, ${c.green()}, ${c.blue()}, ${c.alpha() *
+        opacity})`
+    }
   }) => css`
+    label: text;
     overflow: ${textOverflow &&
       (textOverflow === ('clip' || 'ellipsis') ? 'hidden' : textOverflow)};
     text-overflow: ${textOverflow &&
@@ -36,6 +58,23 @@ const text = {
     text-transform: ${textTransform};
     text-shadow: ${textShadow};
     user-select: ${userSelect};
+
+    color: ${color
+    ? _color(color, textLighten, textDarken, textOpacity)
+    : _color(
+      theme.colors.text.primary,
+      textLighten,
+      textDarken,
+      textOpacity
+    )};
+
+    font-size: ${fontSize &&
+      (typeof fontSize === 'string'
+        ? theme.sizes[fontSize] || fontSize || theme.sizes.sm
+        : fontSize + 'px')};
+    font-style: ${fontStyle};
+    font-weight: ${fontWeight};
+    font-family: ${theme.font};
   `,
   propTypes: {
     color: PropTypes.string,
@@ -70,7 +109,10 @@ const text = {
       'none',
       'text',
       'unset'
-    ])
+    ]),
+    fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    fontStyle: PropTypes.oneOf(['italic', 'bold']),
+    fontWeight: PropTypes.number
   }
 }
 
