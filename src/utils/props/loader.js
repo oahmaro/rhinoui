@@ -2,14 +2,8 @@ import { css } from 'react-emotion'
 import PropTypes from 'prop-types'
 
 const loader = {
-  props: ({
-    theme,
-    size,
-    appearance,
-    loaderColor,
-    loaderSize,
-    loaderWidth
-  }) => css`
+  props: ({ theme, appearance, loaderColor, loaderSize, loaderWidth }) => css`
+    label: loader;
     width: ${(loaderSize &&
       ((typeof loaderSize === 'string' && loaderSize) ||
         (typeof loaderSize === 'number' && loaderSize + 'px'))) ||
@@ -49,9 +43,10 @@ const loader = {
     }
   `,
   propTypes: {
+    loader: PropTypes.bool,
     loaderColor: PropTypes.string,
     loaderSize: PropTypes.string,
-    loaderWidth: PropTypes.string
+    loaderWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   }
 }
 
