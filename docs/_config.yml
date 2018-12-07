@@ -1,1 +1,5 @@
 theme: jekyll-theme-cayman
+
+# Setup
+title: [rhinoui Docs]
+description: [rhinoui design language documentation]
