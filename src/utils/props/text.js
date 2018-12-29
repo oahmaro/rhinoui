@@ -20,21 +20,7 @@ const text = {
     textOpacity,
     fontSize,
     fontStyle,
-    fontWeight,
-    _color = (prop, lighten = 0, darken = 0, opacity = 1) => {
-      const c = theme
-        .color(
-          theme.colors.tags[prop] ||
-            theme.colors.ui[prop] ||
-            theme.colors.text[prop] ||
-            theme.colors.state[prop] ||
-            prop
-        )
-        .darken(darken)
-        .lighten(lighten)
-      return `rgba(${c.red()}, ${c.green()}, ${c.blue()}, ${c.alpha() *
-        opacity})`
-    }
+    fontWeight
   }) => css`
     label: text;
     overflow: ${textOverflow &&
@@ -59,14 +45,8 @@ const text = {
     text-shadow: ${textShadow};
     user-select: ${userSelect};
 
-    color: ${color
-    ? _color(color, textLighten, textDarken, textOpacity)
-    : _color(
-      theme.colors.text.primary,
-      textLighten,
-      textDarken,
-      textOpacity
-    )};
+    color: ${color &&
+      theme._color(color || 'primary', textLighten, textDarken, textOpacity)};
 
     font-size: ${fontSize &&
       (typeof fontSize === 'string'
@@ -80,7 +60,13 @@ const text = {
     color: PropTypes.string,
     textOverflow: PropTypes.oneOf(['clip', 'ellipsis', 'scroll', 'visible']),
     textDirection: PropTypes.oneOf(['ltr', 'rtl']),
-    textDecoration: PropTypes.string,
+    textDecoration: PropTypes.oneOf([
+      'none',
+      'underline',
+      'overline',
+      'line-through',
+      'blink'
+    ]),
     letterSpacing: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     lineHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     textAlign: PropTypes.oneOf([

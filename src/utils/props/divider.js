@@ -13,27 +13,11 @@ const divider = {
     lineColor,
     lineLighten,
     lineDarken,
-    lineOpacity,
-
-    /* ----- Logic props ----- */
-    _color = (prop, lighten = 0, darken = 0, opacity = 1) => {
-      const c = theme
-        .color(
-          theme.colors.tags[prop] ||
-            theme.colors.ui[prop] ||
-            theme.colors.text[prop] ||
-            theme.colors.state[prop] ||
-            prop
-        )
-        .darken(darken)
-        .lighten(lighten)
-      return `rgba(${c.red()}, ${c.green()}, ${c.blue()}, ${c.alpha() *
-        opacity})`
-    }
+    lineOpacity
   }) =>
     css`
       label: divider;
-      background: ${_color(
+      background: ${theme._color(
     lineColor || theme.colors.text.disabled,
     lineLighten,
     lineDarken,

@@ -76,23 +76,7 @@ const border = {
     borderTopOpacity,
     borderRightOpacity,
     borderBottomOpacity,
-    borderLeftOpacity,
-
-    /* ----- Logic props ----- */
-    _color = (prop, lighten = 0, darken = 0, opacity = 1) => {
-      const c = theme
-        .color(
-          theme.colors.tags[prop] ||
-            theme.colors.ui[prop] ||
-            theme.colors.text[prop] ||
-            theme.colors.state[prop] ||
-            prop
-        )
-        .darken(darken)
-        .lighten(lighten)
-      return `rgba(${c.red()}, ${c.green()}, ${c.blue()}, ${c.alpha() *
-        opacity})`
-    }
+    borderLeftOpacity
   }) =>
     css`
       label: border;
@@ -106,10 +90,10 @@ const border = {
       border-bottom: ${borderBottom};
       border-left: ${borderLeft};
       border-color: ${borderColor &&
-        _color(borderColor, borderLighten, borderDarken, borderOpacity)};
+        theme._color(borderColor, borderLighten, borderDarken, borderOpacity)};
 
       border-top-color: ${borderTopColor &&
-        _color(
+        theme._color(
           borderTopColor,
           borderTopLighten,
           borderTopDarken,
@@ -117,7 +101,7 @@ const border = {
         )};
 
       border-right-color: ${borderRightColor &&
-        _color(
+        theme._color(
           borderRightColor,
           borderRightLighten,
           borderRightDarken,
@@ -125,7 +109,7 @@ const border = {
         )};
 
       border-bottom-color: ${borderBottomColor &&
-        _color(
+        theme._color(
           borderBottomColor,
           borderBottomLighten,
           borderBottomDarken,
@@ -133,7 +117,7 @@ const border = {
         )};
 
       border-left-color: ${borderLeftColor &&
-        _color(
+        theme._color(
           borderLeftColor,
           borderLeftLighten,
           borderLeftDarken,
