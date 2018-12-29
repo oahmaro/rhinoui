@@ -2,7 +2,16 @@ import { css } from 'react-emotion'
 import PropTypes from 'prop-types'
 
 const loader = {
-  props: ({ theme, appearance, loaderColor, loaderSize, loaderWidth }) => css`
+  props: ({
+    theme,
+    appearance,
+    loaderColor,
+    loaderSize,
+    loaderWidth,
+    loaderLighten,
+    loaderDarken,
+    loaderOpacity
+  }) => css`
     label: loader;
     width: ${(loaderSize &&
       ((typeof loaderSize === 'string' && loaderSize) ||
@@ -23,15 +32,15 @@ const loader = {
           (typeof loaderWidth === 'number' && loaderWidth + 'px'))) ||
         '2px'}
       solid;
-    border-top-color: ${theme.colors.tags[loaderColor] ||
-      theme.colors.ui[loaderColor] ||
-      theme.colors.state[loaderColor] ||
-      loaderColor ||
-      (appearance === 'primary' ||
-      appearance === 'warning' ||
-      appearance === 'danger'
-        ? theme.colors.text.disabled
-        : theme.colors.state.key)};
+
+    border-top-color: ${theme._color(
+    loaderColor ||
+        (/primary|warning|danger/.test(appearance) ? 'disabled' : 'key'),
+    loaderLighten,
+    loaderDarken,
+    loaderOpacity
+  )};
+
     animation: spin 0.75s linear infinite;
     @keyframes spin {
       0% {

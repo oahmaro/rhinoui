@@ -21,70 +21,6 @@ const button = {
     appearance,
     selected,
 
-    /* ----- Text Props ----- */
-    textHoverColor,
-    textFocusColor,
-    textActiveColor,
-    textHoverLighten,
-    textHoverDarken,
-    textFocusLighten,
-    textFocusDarken,
-    textActiveDarken,
-    textActiveLighten,
-
-    /* ----- Icon Props ----- */
-    iconHoverColor,
-    iconFocusColor,
-    iconActiveColor,
-    iconHoverLighten,
-    iconHoverDarken,
-    iconFocusLighten,
-    iconFocusDarken,
-    iconActiveLighten,
-    iconActiveDarken,
-
-    /* ----- Background Props ----- */
-    backgroundHoverColor,
-    backgroundFocusColor,
-    backgroundActiveColor,
-    backgroundHoverDarken,
-    backgroundHoverLighten,
-    backgroundFocusDarken,
-    backgroundFocusLighten,
-    backgroundActiveDarken,
-    backgroundActiveLighten,
-
-    /* ----- Border Props ----- */
-    borderHoverColor,
-    borderFocusColor,
-    borderActiveColor,
-    borderHoverDarken,
-    borderHoverLighten,
-    borderFocusLighten,
-    borderFocusDarken,
-    borderActiveLighten,
-    borderActiveDarken,
-
-    /* ----- Text Opacity ----- */
-    textHoverOpacity,
-    textFocusOpacity,
-    textActiveOpacity,
-
-    /* ----- Icon Opacity ----- */
-    iconHoverOpacity,
-    iconFocusOpacity,
-    iconActiveOpacity,
-
-    /* ----- Background Opacity ----- */
-    backgroundHoverOpacity,
-    backgroundFocusOpacity,
-    backgroundActiveOpacity,
-
-    /* ----- Border Opacity ----- */
-    borderHoverOpacity,
-    borderFocusOpacity,
-    borderActiveOpacity,
-
     /* ----- Selected Props ----- */
     backgroundSelectedColor,
     textSelectedColor,
@@ -121,21 +57,10 @@ const button = {
     basicActiveStyles,
     basicFocusStyles,
 
-    /* ----- Logic Props ----- */
-    _color = (prop, lighten = 0, darken = 0, opacity = 1) => {
-      const c = theme
-        .color(
-          theme.colors.tags[prop] ||
-            theme.colors.ui[prop] ||
-            theme.colors.text[prop] ||
-            theme.colors.state[prop] ||
-            prop
-        )
-        .darken(darken)
-        .lighten(lighten)
-      return `rgba(${c.red()}, ${c.green()}, ${c.blue()}, ${c.alpha() *
-        opacity})`
-    }
+    /* ----- State Props ----- */
+    hover = {},
+    focus = {},
+    active = {}
   }) => css`
     label: button;
     /* ----- Button ----- */
@@ -145,12 +70,7 @@ const button = {
     vertical-align: middle;
     justify-content: center;
     align-items: center;
-    color: ${_color(
-    theme.colors.text.base,
-    textLighten,
-    textDarken,
-    textOpacity
-  )};
+    color: ${theme._color('base', textLighten, textDarken, textOpacity)};
 
     width: ${
   width || size
@@ -174,91 +94,107 @@ const button = {
     user-select: none;
     font-family: ${theme.font};
     
-    background: ${_color(
-    theme.colors.ui.fill5,
+    background: ${theme._color(
+    'fill4',
     backgroundLighten,
     backgroundDarken,
     backgroundOpacity
   )};
+    fill: ${theme._color('primary', iconLighten, iconDarken, iconOpacity)};
 
     box-sizing: border-box;
     font-size: ${theme.sizes.xs};
     &:focus {
-      border-color: ${_color(
-    theme.colors.state.key,
-    borderFocusLighten,
-    borderFocusDarken,
-    borderFocusOpacity
+      border-color: ${theme._color(
+    focus.borderColor || 'key',
+    focus.borderLighten,
+    focus.borderDarken,
+    focus.borderOpacity
   )};
       border-width: 1px;
       border-style: solid;
-      
-      background: ${_color(
-    theme.colors.ui.fill6,
-    backgroundFocusLighten || 0.3,
-    backgroundFocusDarken,
-    backgroundFocusOpacity
+
+      background: ${theme._color(
+    focus.backgroundColor || 'fill5',
+    focus.backgroundLighten,
+    focus.backgroundDarken,
+    focus.backgroundOpacity
   )};
 
-      color: ${_color(
-    theme.colors.text.light2,
-    textFocusLighten || 0.3,
-    textFocusDarken,
-    textFocusOpacity
+      color: ${theme._color(
+    focus.textColor || 'primary',
+    focus.textLighten,
+    focus.textDarken,
+    focus.textOpacity
   )};
 
-      fill: ${_color(
-    theme.colors.text.light2,
-    iconFocusLighten,
-    iconFocusDarken,
-    iconFocusOpacity
+      fill: ${theme._color(
+    focus.iconColor || 'primary',
+    focus.iconLighten,
+    focus.iconDarken,
+    focus.iconOpacity
   )};
       outline: none;
       ${focusStyles};
     }
     &:hover {
-      color: ${_color(
-    theme.colors.text.light1,
-    textHoverLighten,
-    textHoverDarken,
-    textHoverOpacity
+      border-color: ${hover.boderColor &&
+        theme._color(
+          hover.borderColor,
+          hover.borderLighten,
+          hover.borderDarken,
+          hover.borderOpacity
+        )};
+
+      color: ${theme._color(
+    hover.textColor || 'primary',
+    hover.textLighten,
+    hover.textDarken,
+    hover.textOpacity
   )};
-      fill: ${_color(
-    theme.colors.text.light1,
-    iconHoverLighten,
-    iconHoverDarken,
-    iconHoverOpacity
+      fill: ${theme._color(
+    hover.iconColor || 'primary',
+    hover.iconLighten,
+    hover.iconDarken,
+    hover.iconOpacity
   )};
 
-      background: ${_color(
-    theme.colors.ui.fill6,
-    backgroundHoverLighten || 0.3,
-    backgroundHoverDarken,
-    backgroundHoverOpacity
+      background: ${theme._color(
+    hover.backgroundColor || 'fill5',
+    hover.backgroundLighten,
+    hover.backgroundDarken,
+    hover.backgroundOpacity
   )};
 
     ${hoverStyles};
     }
     &:active {
-      color: ${_color(
-    theme.colors.text.primary,
-    textActiveLighten,
-    textActiveDarken || 0.2,
-    textActiveOpacity
+      border-color: ${theme._color(
+    active.borderColor || 'key',
+    active.borderLighten,
+    active.borderDarken,
+    active.borderOpacity
   )};
 
-      fill: ${_color(
-    theme.colors.text.primary,
-    iconActiveLighten,
-    iconActiveDarken || 0.2,
-    iconActiveOpacity
+      color: ${theme._color(
+    active.textColor || 'primary',
+    active.textLighten,
+    active.textDarken,
+    active.textOpacity
   )};
 
-      background: ${_color(
-    theme.colors.ui.fill6,
-    backgroundActiveLighten,
-    backgroundActiveDarken || 0.2,
-    backgroundActiveOpacity
+      fill: ${theme._color(
+    active.iconColor || 'primary',
+    active.iconLighten,
+    active.iconDarken,
+    active.iconOpacity
+  )};
+
+      background: ${theme._color(
+    active.backgroundColor || 'fill5',
+    active.backgroundLighten,
+    active.backgroundDarken,
+    active.backgroundOpacity
   )};
     ${activeStyles};
     }
@@ -271,16 +207,24 @@ const button = {
     /* ----- Success ----- */
     /* -------------------- */
     color: ${appearance === 'success' &&
-      _color(theme.colors.text.light2, textLighten, textDarken, textOpacity) +
-        ' !important'};
+      theme._color(
+        theme.colors.text.light2,
+        textLighten,
+        textDarken,
+        textOpacity
+      ) + ' !important'};
 
     fill: ${appearance === 'success' &&
-      _color(theme.colors.text.light2, iconLighten, iconDarken, iconOpacity) +
-        ' !important'};
+      theme._color(
+        theme.colors.text.light2,
+        iconLighten,
+        iconDarken,
+        iconOpacity
+      ) + ' !important'};
 
 
     background: ${appearance === 'success' &&
-      _color(
+      theme._color(
         theme.colors.state.success,
         backgroundLighten,
         backgroundDarken,
@@ -289,35 +233,35 @@ const button = {
 
     &:focus {
       background: ${appearance === 'success' &&
-        _color(
+        theme._color(
           theme.colors.state.success,
-          backgroundFocusLighten,
-          backgroundFocusDarken || 0.2,
-          backgroundFocusOpacity
+          focus.backgroundLighten,
+          focus.backgroundDarken,
+          focus.backgroundOpacity
         )};
 
       color: ${appearance === 'success' &&
-        _color(
-          theme.colors.text.light2,
-          textFocusLighten,
-          textFocusDarken,
-          textFocusOpacity
+        theme._color(
+          'light2',
+          focus.textLighten,
+          focus.textDarken,
+          focus.textOpacity
         )};
 
       fill: ${appearance === 'success' &&
-        _color(
-          theme.colors.text.light2,
-          iconFocusLighten,
-          iconFocusDarken,
-          iconFocusOpacity
+        theme._color(
+          'light2',
+          focus.iconLighten,
+          focus.iconDarken,
+          focus.iconOpacity
         )} ; 
 
       border-color: ${appearance === 'success' &&
-        _color(
+        theme._color(
           theme.colors.text.light2,
-          borderFocusLighten,
-          borderFocusDarken,
-          borderFocusOpacity
+          focus.borderLighten,
+          focus.borderDarken,
+          focus.borderOpacity
         )};
 
       border-width: ${appearance === 'success' && '1px'};
@@ -326,54 +270,54 @@ const button = {
     }
     &:hover {
       background: ${appearance === 'success' &&
-        _color(
-          theme.colors.state.success,
-          backgroundHoverLighten,
-          backgroundHoverDarken || 0.2,
-          backgroundHoverOpacity
+        theme._color(
+          'success',
+          hover.backgroundLighten,
+          hover.backgroundDarken,
+          hover.backgroundOpacity
         )};
 
       color: ${appearance === 'success' &&
-        _color(
-          theme.colors.text.light2,
-          textHoverLighten,
-          textHoverDarken,
-          textHoverOpacity
+        theme._color(
+          'light2',
+          hover.textLighten,
+          hover.textDarken,
+          hover.textOpacity
         )};
 
       fill: ${appearance === 'success' &&
-        _color(
+        theme._color(
           theme.colors.text.light2,
-          iconHoverLighten,
-          iconHoverDarken,
-          iconHoverOpacity
+          hover.iconLighten,
+          hover.iconDarken,
+          hover.iconOpacity
         )};
 
       ${appearance === 'success' && successHoverStyles};
     }
     &:active {
       background: ${appearance === 'success' &&
-        _color(
-          theme.colors.state.success,
-          backgroundActiveLighten,
-          backgroundActiveDarken || 0.4,
-          backgroundActiveOpacity
+        theme._color(
+          'success',
+          active.backgroundLighten,
+          active.backgroundDarken,
+          active.backgroundOpacity
         )};
 
       color: ${appearance === 'success' &&
-        _color(
-          theme.colors.text.base,
-          textActiveLighten,
-          textActiveDarken,
-          textActiveOpacity
+        theme._color(
+          'base',
+          active.textLighten,
+          active.textDarken,
+          active.textOpacity
         )};
 
       fill: ${appearance === 'success' &&
-        _color(
-          theme.colors.text.base,
-          iconActiveLighten,
-          iconActiveDarken,
-          iconActiveOpacity
+        theme._color(
+          'base',
+          active.iconLighten,
+          active.iconDarken,
+          active.iconOpacity
         )};
 
       ${appearance === 'success' && successActiveStyles};
@@ -383,51 +327,49 @@ const button = {
     /* ----- Warning ----- */
     /* ------------------- */
     color: ${appearance === 'warning' &&
-      _color(theme.colors.text.dark, textLighten, textDarken, textOpacity) +
-        ' !important'};
+      theme._color('dark', textLighten, textDarken, textOpacity)};
 
     fill: ${appearance === 'warning' &&
-      _color(theme.colors.text.dark, iconLighten, iconDarken, iconOpacity) +
-        ' !important'};
+      theme._color('dark', iconLighten, iconDarken, iconOpacity)};
 
     background: ${appearance === 'warning' &&
-      _color(
-        theme.colors.state.warning1,
+      theme._color(
+        'warning1',
         backgroundLighten,
         backgroundDarken,
         backgroundOpacity
       )};
     &:focus {
       background: ${appearance === 'warning' &&
-        _color(
-          theme.colors.state.warning1,
-          backgroundFocusLighten || 0.2,
-          backgroundFocusDarken,
-          backgroundFocusOpacity
+        theme._color(
+          'warning1',
+          focus.backgroundLighten,
+          focus.backgroundDarken,
+          focus.backgroundOpacity
         )};
 
       color: ${appearance === 'warning' &&
-        _color(
-          theme.colors.text.dark,
-          textFocusLighten,
-          textFocusDarken,
-          textFocusOpacity
+        theme._color(
+          'dark',
+          focus.textLighten,
+          focus.textDarken,
+          focus.textOpacity
         )};
 
       fill: ${appearance === 'warning' &&
-        _color(
-          theme.color.text.dark,
-          iconFocusLighten,
-          iconFocusDarken,
-          iconFocusOpacity
+        theme._color(
+          'dark',
+          focus.iconLighten,
+          focus.iconDarken,
+          focus.iconOpacity
         )};
 
       border-color: ${appearance === 'warning' &&
-        _color(
-          theme.colors.text.light2,
-          borderFocusLighten,
-          borderFocusDarken,
-          borderFocusOpacity
+        theme._color(
+          'light2',
+          focus.borderLighten,
+          focus.borderDarken,
+          focus.borderOpacity
         )};
 
       border-width: ${appearance === 'warning' && '1px'};
@@ -436,54 +378,54 @@ const button = {
     }
     &:hover {
       background: ${appearance === 'warning' &&
-        _color(
-          theme.colors.state.warning1,
-          backgroundHoverLighten || 0.2,
-          backgroundHoverDarken,
-          backgroundHoverOpacity
+        theme._color(
+          'warning1',
+          hover.backgroundLighten,
+          hover.backgroundDarken,
+          hover.backgroundOpacity
         )};
 
       color: ${appearance === 'warning' &&
-        _color(
-          theme.colors.state.warning1,
-          textHoverLighten,
-          textHoverDarken,
-          textHoverOpacity
+        theme._color(
+          'warning1',
+          hover.textLighten,
+          hover.textDarken,
+          hover.textOpacity
         )};
       
       fill: ${appearance === 'warning' &&
-        _color(
-          theme.colors.text.dark,
-          iconHoverLighten,
-          iconHoverDarken,
-          iconHoverOpacity
+        theme._color(
+          'dark',
+          hover.iconLighten,
+          hover.iconDarken,
+          hover.iconOpacity
         )};
 
       ${appearance === 'warning' && warningHoverStyles};
     }
     &:active {
       background: ${appearance === 'warning' &&
-        _color(
-          theme.colors.state.warning1,
-          backgroundActiveLighten,
-          backgroundActiveDarken || 0.4,
-          backgroundActiveOpacity
+        theme._color(
+          'warning1',
+          active.backgroundLighten,
+          active.backgroundDarken,
+          active.backgroundOpacity
         )};
 
       color: ${appearance === 'warning' &&
-        _color(
-          theme.colors.text.dark,
-          textActiveLighten,
-          textActiveDarken,
-          textActiveOpacity
+        theme._color(
+          'dark',
+          active.textLighten,
+          active.textDarken,
+          active.textOpacity
         )};
 
       fill: ${appearance === 'warning' &&
-        _color(
-          theme.colors.text.dark,
-          iconActiveLighten,
-          iconActiveDarken,
-          iconActiveOpacity
+        theme._color(
+          'dark',
+          active.iconLighten,
+          active.iconDarken,
+          active.iconOpacity
         )};
 
       ${appearance === 'warning' && warningActiveStyles};
@@ -494,17 +436,15 @@ const button = {
     /* ------------------ */
 
     color: ${appearance === 'danger' &&
-      _color(theme.colors.text.light1, textLighten, textDarken, textOpacity) +
-        ' !important'};
+      theme._color('light1', textLighten, textDarken, textOpacity)};
 
 
     fill: ${appearance === 'danger' &&
-      _color(theme.colors.text.light1, iconLighten, iconDarken, iconOpacity) +
-        ' !important'};
+      theme._color('light1', iconLighten, iconDarken, iconOpacity)};
 
     background: ${appearance === 'danger' &&
-      _color(
-        theme.colors.state.error,
+      theme._color(
+        'error',
         backgroundLighten,
         backgroundDarken,
         backgroundOpacity
@@ -512,35 +452,35 @@ const button = {
 
     &:focus {
       background: ${appearance === 'danger' &&
-        _color(
-          theme.colors.state.error,
-          backgroundFocusLighten || 0.2,
-          backgroundFocusDarken,
-          backgroundFocusOpacity
+        theme._color(
+          'error',
+          focus.backgroundLighten,
+          focus.backgroundDarken,
+          focus.backgroundOpacity
         )};
 
       color: ${appearance === 'danger' &&
-        _color(
-          theme.colors.text.light2,
-          textFocusLighten,
-          textFocusDarken,
-          textFocusOpacity
+        theme._color(
+          'light1',
+          focus.textLighten,
+          focus.textDarken,
+          focus.textOpacity
         )};
 
       fill: ${appearance === 'danger' &&
-        _color(
-          theme.colors.text.light2,
-          iconFocusLighten,
-          iconFocusDarken,
-          iconFocusOpacity
+        theme._color(
+          'light1',
+          focus.iconLighten,
+          focus.iconDarken,
+          focus.iconOpacity
         )};
 
       border-color: ${appearance === 'danger' &&
-        _color(
-          theme.colors.text.light2,
-          borderFocusLighten,
-          borderFocusDarken,
-          borderFocusOpacity
+        theme._color(
+          'light1',
+          focus.borderLighten,
+          focus.borderDarken,
+          focus.borderOpacity
         )};
 
       border-width: ${appearance === 'danger' && '1px'};
@@ -549,53 +489,53 @@ const button = {
     }
     &:hover {
       background: ${appearance === 'danger' &&
-        _color(
-          theme.colors.state.error,
-          backgroundHoverLighten,
-          backgroundHoverDarken,
-          backgroundHoverOpacity
+        theme._color(
+          'error',
+          hover.backgroundLighten,
+          hover.backgroundDarken,
+          hover.backgroundOpacity
         )};
 
       color: ${appearance === 'danger' &&
-        _color(
-          theme.colors.text.light2,
-          textHoverLighten,
-          textHoverDarken,
-          textHoverOpacity
+        theme._color(
+          'light1',
+          hover.textLighten,
+          hover.textDarken,
+          hover.textOpacity
         )};
 
       fill: ${appearance === 'danger' &&
-        _color(
-          theme.colors.text.light2,
-          iconHoverLighten,
-          iconHoverDarken,
-          iconHoverOpacity
+        theme._color(
+          'light1',
+          hover.iconLighten,
+          hover.iconDarken,
+          hover.iconOpacity
         )};
       ${appearance === 'danger' && dangerHoverStyles}
     }
     &:active {
       background: ${appearance === 'danger' &&
-        _color(
-          theme.colors.state.error,
-          backgroundActiveLighten,
-          backgroundActiveDarken || 0.4,
-          backgroundActiveOpacity
+        theme._color(
+          'error',
+          active.backgroundLighten,
+          active.backgroundDarken,
+          active.backgroundOpacity
         )};
 
       color: ${appearance === 'danger' &&
-        _color(
-          theme.colors.text.base,
-          textActiveLighten,
-          textActiveDarken,
-          textActiveOpacity
+        theme._color(
+          'primary',
+          active.textLighten,
+          active.textDarken,
+          active.textOpacity
         )};
 
       fill: ${appearance === 'danger' &&
-        _color(
-          theme.colors.text.base,
-          iconActiveLighten,
-          iconActiveDarken,
-          iconActiveOpacity
+        theme._color(
+          'primary',
+          active.iconLighten,
+          active.iconDarken,
+          active.iconOpacity
         )};
 
       ${appearance === 'danger' && dangerActiveStyles};
@@ -605,47 +545,50 @@ const button = {
     /* ----- Primary ----- */
     /* ------------------- */
     background: ${appearance === 'primary' &&
-      _color(
-        theme.colors.state.key,
+      theme._color(
+        'key',
         backgroundLighten,
         backgroundDarken,
         backgroundOpacity
       )};
 
     color: ${appearance === 'primary' &&
-      _color(theme.colors.text.light2, textLighten, textDarken, textOpacity)};
+      theme._color('light2', textLighten, textDarken, textOpacity)};
+
+    fill: ${appearance === 'primary' &&
+      theme._color('light2', iconLighten, iconDarken, iconOpacity)};
 
     &:focus {
       background: ${appearance === 'primary' &&
-        _color(
-          theme.colors.state.key,
-          backgroundFocusLighten,
-          backgroundFocusDarken || 0.1,
-          backgroundFocusOpacity
+        theme._color(
+          'key',
+          focus.backgroundLighten,
+          focus.backgroundDarken,
+          focus.backgroundOpacity
         )};
 
       color: ${appearance === 'primary' &&
-        _color(
-          theme.colors.text.light2,
-          textFocusLighten,
-          textFocusDarken,
-          textFocusOpacity
+        theme._color(
+          'white',
+          focus.textLighten,
+          focus.textDarken,
+          focus.textOpacity
         )};
 
       fill: ${appearance === 'primary' &&
-        _color(
-          theme.colors.text.light2,
-          iconFocusLighten,
-          iconFocusDarken,
-          iconFocusOpacity
+        theme._color(
+          'white',
+          focus.iconLighten,
+          focus.iconDarken,
+          focus.iconOpacity
         )};
 
       border-color: ${appearance === 'primary' &&
-        _color(
-          theme.colors.state.warning2,
-          borderFocusLighten,
-          borderFocusDarken,
-          borderFocusOpacity
+        theme._color(
+          'warning2',
+          focus.borderLighten,
+          focus.borderDarken,
+          focus.borderOpacity
         )};
 
       border-width: ${appearance === 'primary' && '1px'};
@@ -654,54 +597,54 @@ const button = {
     }
     &:hover {
       background: ${appearance === 'primary' &&
-        _color(
-          theme.colors.state.key,
-          backgroundHoverLighten,
-          backgroundHoverDarken || 0.2,
-          backgroundHoverOpacity
+        theme._color(
+          'key',
+          hover.backgroundLighten,
+          hover.backgroundDarken,
+          hover.backgroundOpacity
         )};
 
       color: ${appearance === 'primary' &&
-        _color(
-          theme.colors.text.light2,
-          textHoverLighten,
-          textHoverDarken,
-          textHoverOpacity
+        theme._color(
+          'white',
+          hover.textLighten,
+          hover.textDarken,
+          hover.textOpacity
         )};
 
       fill: ${appearance === 'primary' &&
-        _color(
-          theme.colors.text.light2,
-          iconHoverLighten,
-          iconHoverDarken,
-          iconHoverOpacity
+        theme._color(
+          'white',
+          hover.iconLighten,
+          hover.iconDarken,
+          hover.iconOpacity
         )};
 
       ${appearance === 'primary' && primaryHoverStyles};
     }
     &:active {
       background: ${appearance === 'primary' &&
-        _color(
-          theme.colors.state.key,
-          backgroundActiveLighten,
-          backgroundActiveDarken || 0.5,
-          backgroundActiveOpacity
+        theme._color(
+          'key',
+          active.backgroundLighten,
+          active.backgroundDarken,
+          active.backgroundOpacity
         )};
 
       color: ${appearance === 'primary' &&
-        _color(
-          theme.colors.text.base,
-          textActiveLighten,
-          textActiveDarken,
-          textActiveOpacity
+        theme._color(
+          'white',
+          active.textLighten,
+          active.textDarken,
+          active.textOpacity
         )};
       
       fill: ${appearance === 'primary' &&
-        _color(
-          theme.colors.text.base,
-          iconActiveLighten,
-          iconActiveDarken,
-          iconActiveOpacity
+        theme._color(
+          'white',
+          active.iconLighten,
+          active.iconDarken,
+          active.iconOpacity
         )};
 
       ${appearance === 'primary' && primaryActiveStyles};
@@ -710,32 +653,38 @@ const button = {
 
     /* ----- Secondary ----- */
     /* --------------------- */
-    background: ${appearance === 'secondary' &&
-      _color('unset', backgroundLighten, backgroundDarken, backgroundOpacity) +
-        ' !important'};
+    color: ${appearance === 'secondary' &&
+      theme._color('key', textLighten, textDarken, textOpacity)};
+    background: ${appearance === 'secondary' && 'unset'};
   
     border-color: ${appearance === 'secondary' && 'transparent'};
     border-style: ${appearance === 'secondary' && 'solid'};
     border-width: ${appearance === 'secondary' && '1px'};
     &:focus {
       background: ${appearance === 'secondary' && 'unset'};
-      border-color: ${appearance === 'secondary' && 'transparent'};
+      border-color: ${appearance === 'secondary' &&
+        theme._color(
+          'disabled',
+          focus.borderLighten,
+          focus.borderDarken,
+          focus.borderOpacity
+        )};
 
       color: ${appearance === 'secondary' &&
-        _color(
-          theme.colors.state.key,
-          textFocusLighten || 0.3,
-          textFocusDarken,
-          textFocusOpacity
+        theme._color(
+          'key',
+          focus.textLighten,
+          focus.textDarken,
+          focus.textOpacity
         )};
          ) };
 
       fill: ${appearance === 'secondary' &&
-        _color(
-          theme.colors.state.key,
-          iconFocusLighten,
-          iconFocusDarken,
-          iconFocusOpacity
+        theme._color(
+          'key',
+          focus.iconLighten,
+          focus.iconDarken,
+          focus.iconOpacity
         )};
 
       ${appearance === 'secondary' && secondaryFocusStyles};
@@ -744,19 +693,19 @@ const button = {
       background: ${appearance === 'secondary' && 'unset'};
 
       color: ${appearance === 'secondary' &&
-        _color(
-          theme.colors.state.key,
-          textHoverLighten || 0.3,
-          textHoverDarken,
-          textHoverOpacity
+        theme._color(
+          'key',
+          hover.textLighten,
+          hover.textDarken,
+          hover.textOpacity
         )};
 
       fill: ${appearance === 'secondary' &&
-        _color(
-          theme.colors.state.key,
-          iconHoverLighten || 0.3,
-          iconHoverDarken,
-          iconHoverOpacity
+        theme._color(
+          'key',
+          hover.iconLighten,
+          hover.iconDarken,
+          hover.iconOpacity
         )};
 
       ${appearance === 'secondary' && secondaryHoverStyles}
@@ -765,19 +714,19 @@ const button = {
       background: ${appearance === 'secondary' && 'unset'};
 
       color: ${appearance === 'secondary' &&
-        _color(
-          theme.colors.state.key,
-          textActiveLighten,
-          textActiveDarken || 0.4,
-          textActiveOpacity
+        theme._color(
+          'key',
+          active.textLighten,
+          active.textDarken,
+          active.textOpacity
         )};
 
       fill: ${appearance === 'secondary' &&
-        _color(
-          theme.colors.state.key,
-          iconActiveLighten,
-          iconActiveDarken || 0.4,
-          iconActiveOpacity
+        theme._color(
+          'key',
+          active.iconLighten,
+          active.iconDarken,
+          active.iconOpacity
         )};
 
       ${appearance === 'secondary' && secondaryActiveStyles};
@@ -787,52 +736,57 @@ const button = {
     /* ----- Basic ----- */
     /* ----------------- */
     color: ${appearance === 'basic' &&
-      _color(
-        theme.colors.text.secondary,
-        textLighten,
-        textDarken,
-        textOpacity
-      )};
+      theme._color('secondary', textLighten, textDarken, textOpacity)};
 
     background: ${appearance === 'basic' && 'unset'};
+
+    fill: ${appearance === 'basic' &&
+      theme._color('secondary', textLighten, textDarken, textOpacity)};
+      
     &:focus {
       background: ${appearance === 'basic' && 'unset'};
 
       color: ${appearance === 'basic' &&
-        _color(
-          theme.colors.text.primary,
-          textFocusLighten,
-          textFocusDarken,
-          textFocusOpacity
+        theme._color(
+          'secondary',
+          focus.textLighten,
+          focus.textDarken,
+          focus.textOpacity
         )};
 
       fill: ${appearance === 'basic' &&
-        _color(
-          theme.colors.text.light2,
-          iconFocusLighten,
-          iconFocusDarken,
-          iconFocusOpacity
+        theme._color(
+          'secondary',
+          focus.iconLighten,
+          focus.iconDarken,
+          focus.iconOpacity
         )};
 
       ${appearance === 'basic' && basicFocusStyles};
     }
     &:hover {
-      background: ${appearance === 'basic' && 'unset'};
+      background: ${appearance === 'basic' &&
+        theme._color(
+          hover.backgroundColor || 'unset',
+          hover.backgroundLighten,
+          hover.backgroundDarken,
+          hover.backgroundOpacity
+        )};
 
       color: ${appearance === 'basic' &&
-        _color(
-          theme.colors.text.primary,
-          textHoverLighten,
-          textHoverDarken,
-          textHoverOpacity
+        theme._color(
+          hover.textColor || 'secondary',
+          hover.textLighten,
+          hover.textDarken,
+          hover.textOpacity
         )};
 
       fill: ${appearance === 'basic' &&
-        _color(
-          theme.colors.text.light2,
-          iconHoverLighten,
-          iconHoverDarken,
-          iconHoverOpacity
+        theme._color(
+          hover.iconColor || 'secondary',
+          hover.iconLighten,
+          hover.iconDarken,
+          hover.iconOpacity
         )};
 
       ${appearance === 'basic' && basicHoverStyles};
@@ -841,179 +795,97 @@ const button = {
       background: ${appearance === 'basic' && 'unset'};
 
       color: ${appearance === 'basic' &&
-        _color(
-          theme.colors.text.primary,
-          textActiveLighten,
-          textActiveDarken || 0.3,
-          textActiveOpacity
+        theme._color(
+          'secondary',
+          active.textLighten,
+          active.textDarken,
+          active.textOpacity
         )};
 
 
       fill: ${appearance === 'basic' &&
-        _color(
-          theme.colors.text.primary,
-          iconActiveLighten,
-          iconActiveDarken || 0.3,
-          iconActiveOpacity
+        theme._color(
+          'secondary',
+          active.iconLighten,
+          active.iconDarken,
+          active.iconOpacity
         )};
 
       ${appearance === 'basic' && basicActiveStyles};
     }
     ${(appearance = 'basic' && basicStyles)};
     
-    
-
-    /* ----- Color ----- */
-    /* -------------------- */
-    &:focus {
-      fill: ${iconFocusColor &&
-        _color(
-          iconFocusColor,
-          iconFocusLighten || 0.3,
-          iconFocusDarken,
-          iconFocusOpacity
-        )};
-
-      color: ${textFocusColor &&
-        _color(
-          textFocusColor,
-          textFocusLighten || 0.3,
-          textFocusDarken,
-          textFocusOpacity
-        )};
-
-      background: ${backgroundFocusColor &&
-        _color(
-          backgroundFocusColor,
-          backgroundFocusLighten || 0.3,
-          backgroundFocusDarken,
-          backgroundFocusOpacity
-        )};
-
-    }
-    &:hover {
-      fill: ${iconHoverColor &&
-        _color(
-          iconHoverColor,
-          iconHoverLighten || 0.3,
-          iconHoverDarken,
-          iconHoverOpacity
-        )};
-
-      color: ${textHoverColor &&
-        _color(
-          textHoverColor,
-          textHoverLighten || 0.3,
-          textHoverDarken,
-          textHoverOpacity
-        )};
-
-      background: ${backgroundHoverColor &&
-        _color(
-          backgroundHoverColor,
-          backgroundHoverLighten || 0.3,
-          backgroundHoverDarken,
-          backgroundHoverOpacity
-        )};
-
-    }
-    &:active {
-      fill: ${iconActiveColor &&
-        _color(
-          iconActiveColor,
-          iconActiveLighten || 0.3,
-          iconActiveDarken,
-          iconActiveOpacity
-        )};
-
-      color: ${textActiveColor &&
-        _color(
-          textActiveColor,
-          textActiveLighten || 0.3,
-          textActiveDarken,
-          textActiveOpacity
-        )};
-      
-      background: ${backgroundActiveColor &&
-        _color(
-          backgroundActiveColor,
-          backgroundActiveLighten || 0.3,
-          backgroundActiveDarken,
-          backgroundActiveOpacity
-        )};
-    }
-
     /* ----- Selected ----- */
     /* -------------------- */
     background: ${selected &&
       ((appearance === 'primary' &&
-        _color(
+        theme._color(
           theme.colors.state.key,
           backgroundLighten,
-          backgroundDarken || 0.2,
+          backgroundDarken,
           backgroundOpacity
         )) ||
         (appearance === 'secondary' && 'unset') ||
         (appearance === 'success' &&
-          _color(
+          theme._color(
             theme.color.state.success,
             backgroundLighten,
-            backgroundDarken || 0.2,
+            backgroundDarken,
             backgroundOpacity
           )) ||
         (appearance === 'warning' &&
-          _color(
+          theme._color(
             theme.colors.state.warning1,
-            backgroundLighten || 0.2,
+            backgroundLighten,
             backgroundDarken,
             backgroundOpacity
           )) ||
         (appearance === 'danger' &&
-          _color(
+          theme._color(
             theme.colors.state.error,
-            backgroundLighten || 0.1,
+            backgroundLighten,
             backgroundDarken,
             backgroundOpacity
           )) ||
         (appearance === 'basic' && 'unset') ||
-        _color(
+        theme._color(
           theme.colors.ui.fill6,
-          backgroundLighten || 0.2,
+          backgroundLighten,
           backgroundDarken,
           backgroundOpacity
         ))};
 
     background: ${backgroundSelectedColor &&
-      _color(
+      theme._color(
         backgroundSelectedColor,
-        backgroundLighten || 0.2,
+        backgroundLighten,
         backgroundDarken,
         backgroundOpacity
       )};
 
     color: ${selected &&
       ((appearance === ('primary' || 'success' || 'danger') &&
-        _color(
+        theme._color(
           theme.colors.text.light2,
           textLighten,
           textDarken,
           textOpacity
         )) ||
         (appearance === 'warning' &&
-          _color(
+          theme._color(
             theme.colors.text.dark,
             textLighten,
             textDarken,
             textOpacity
           )) ||
         (appearance === 'secondary' &&
-          _color(
+          theme._color(
             theme.colors.state.key,
-            textLighten || 0.2,
+            textLighten,
             textDarken,
             textOpacity
           )) ||
-        _color(
+        theme._color(
           theme.colors.text.primary,
           textLighten,
           textDarken,
@@ -1024,40 +896,21 @@ const button = {
     border-style: ${selected && 'solid'};
 
     fill: ${selected &&
-      _color(theme.colors.text.light2, iconLighten, iconDarken, iconOpacity) +
-        '!important'};
+      theme._color(
+        theme.colors.text.light2,
+        iconLighten,
+        iconDarken,
+        iconOpacity
+      ) + '!important'};
     ${selected && selectedStyles};
   `,
   propTypes: {
+    active: PropTypes.object,
     appearance: PropTypes.string,
     selected: PropTypes.bool,
-    textHoverColor: PropTypes.string,
-    textFocusColor: PropTypes.string,
-    textActiveColor: PropTypes.string,
-    textHoverLighten: PropTypes.string,
-    textHoverDarken: PropTypes.string,
-    textFocusLighten: PropTypes.string,
-    textFocusDarken: PropTypes.string,
-    textActiveDarken: PropTypes.string,
-    textActiveLighten: PropTypes.string,
-    iconHoverColor: PropTypes.string,
-    iconFocusColor: PropTypes.string,
-    iconActiveColor: PropTypes.string,
-    iconHoverLighten: PropTypes.string,
-    iconHoverDarken: PropTypes.string,
-    iconFocusLighten: PropTypes.string,
-    iconFocusDarken: PropTypes.string,
-    iconActiveLighten: PropTypes.string,
-    iconActiveDarken: PropTypes.string,
-    backgroundHoverColor: PropTypes.string,
-    backgroundFocusColor: PropTypes.string,
-    backgroundActiveColor: PropTypes.string,
-    backgroundHoverDarken: PropTypes.string,
-    backgroundHoverLighten: PropTypes.string,
-    backgroundFocusDarken: PropTypes.string,
-    backgroundFocusLighten: PropTypes.string,
-    backgroundActiveDarken: PropTypes.string,
-    backgroundActiveLighten: PropTypes.string,
+    textDarken: PropTypes.number,
+    iconDarken: PropTypes.number,
+    iconLighten: PropTypes.number,
     backgroundSelectedColor: PropTypes.string,
     hoverStyles: PropTypes.string,
     focusStyles: PropTypes.string,
@@ -1069,28 +922,7 @@ const button = {
     primaryStyles: PropTypes.string,
     secondaryStyles: PropTypes.string,
     basicStyles: PropTypes.string,
-    buttonStyles: PropTypes.string,
-    dangerActiveStyles: PropTypes.string,
-    dangerFocusStyles: PropTypes.string,
-    dangerHoverStyles: PropTypes.string,
-    warningActiveStyles: PropTypes.string,
-    warningHoverStyles: PropTypes.string,
-    warningFocusStyles: PropTypes.string,
-    successActiveStyles: PropTypes.string,
-    successHoverStyles: PropTypes.string,
-    successFocusStyles: PropTypes.string,
-    primaryActiveStyles: PropTypes.string,
-    primaryHoverStyles: PropTypes.string,
-    primaryFocusStyles: PropTypes.string,
-    secondaryActiveStyles: PropTypes.string,
-    secondaryHoverStyles: PropTypes.string,
-    secondaryFocusStyles: PropTypes.string,
-    basicHoverStyles: PropTypes.string,
-    basicActiveStyles: PropTypes.string,
-    basicFocusStyles: PropTypes.string
-  },
-  defaultProps: {
-    appearance: 'none'
+    buttonStyles: PropTypes.string
   }
 }
 

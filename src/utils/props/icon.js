@@ -9,42 +9,21 @@ const icon = {
     iconColor,
     iconOpacity,
     iconDarken,
-    iconLighten,
-    _color = (prop, lighten = 0, darken = 0, opacity = 1) => {
-      const c = theme
-        .color(
-          theme.colors.tags[prop] ||
-            theme.colors.ui[prop] ||
-            theme.colors.text[prop] ||
-            theme.colors.state[prop] ||
-            prop
-        )
-        .darken(darken)
-        .lighten(lighten)
-      return `rgba(${c.red()}, ${c.green()}, ${c.blue()}, ${c.alpha() *
-        opacity})`
-    }
+    iconLighten
   }) => css`
     label: icon;
-    width: ${icon &&
-      (iconSize
-        ? (typeof iconSize === 'string' && iconSize) ||
-          (typeof iconSize === 'number' && iconSize + 'px')
-        : theme.sizes.lg)};
-    height: ${icon &&
-      (iconSize
-        ? (typeof iconSize === 'string' && iconSize) ||
-          (typeof iconSize === 'number' && iconSize + 'px')
-        : theme.sizes.lg)};
+    width: ${(iconSize && (typeof iconSize === 'string' && iconSize)) ||
+      (typeof iconSize === 'number' && iconSize + 'px')};
+    height: ${(iconSize && (typeof iconSize === 'string' && iconSize)) ||
+      (typeof iconSize === 'number' && iconSize + 'px')};
 
-    fill: ${iconColor
-    ? _color(iconColor, iconLighten, iconDarken, iconOpacity)
-    : _color(
-      theme.colors.text.primary,
-      iconLighten,
-      iconDarken,
-      iconOpacity
-    )};
+    fill: ${iconColor &&
+      theme._color(
+        iconColor || 'primary',
+        iconLighten,
+        iconDarken,
+        iconOpacity
+      )};
   `,
   propTypes: {
     name: PropTypes.oneOf([

@@ -11,23 +11,22 @@ const shadow = {
     shadowOpacity,
     shadowRadius,
     shadowBlur,
-    _sColor = attribute =>
-      theme.color(
-        theme.colors.tags[attribute] ||
-          theme.colors.ui[attribute] ||
-          theme.colors.text[attribute] ||
-          theme.colors.state[attribute] ||
-          attribute
-      )
+    shadowLighten,
+    shadowDarken
   }) => css`
     label: shadow;
     box-shadow: ${boxShadow ||
-      `${shadowX || 0}px ${shadowY || 0}px ${shadowBlur ||
-        0}px ${shadowRadius || 0}px rgba(${_sColor(
-        shadowColor
-      ).red()}, ${_sColor(shadowColor).green()}, ${_sColor(
-        shadowColor
-      ).blue()}, ${_sColor(shadowColor).alpha() * (shadowOpacity || 1)})`};
+      ((shadowRadius || shadowX || shadowY) &&
+        theme._color(
+          shadowColor || 'fill0',
+          shadowLighten,
+          shadowDarken,
+          shadowOpacity,
+          shadowX,
+          shadowY,
+          shadowBlur,
+          shadowRadius
+        ))};
   `,
   propTypes: {}
 }

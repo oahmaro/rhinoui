@@ -6,31 +6,20 @@ const background = {
     /* ----- Other Props ----- */
     theme,
     /* ----- Background Props ----- */
+    background,
+    backgroundAttachment,
+    backgroundImage,
+    backgroundPosition,
+    backgroundRepeat,
     backgroundColor,
     backgroundOpacity,
     backgroundDarken,
-    backgroundLighten,
-
-    /* ----- Logic Props ----- */
-    _color = (prop, lighten = 0, darken = 0, opacity = 1) => {
-      const c = theme
-        .color(
-          theme.colors.tags[prop] ||
-            theme.colors.ui[prop] ||
-            theme.colors.text[prop] ||
-            theme.colors.state[prop] ||
-            prop
-        )
-        .darken(darken)
-        .lighten(lighten)
-      return `rgba(${c.red()}, ${c.green()}, ${c.blue()}, ${c.alpha() *
-        opacity})`
-    }
+    backgroundLighten
   }) =>
     backgroundColor &&
     css`
       label: background;
-      background: ${_color(
+      background: ${theme._color(
     backgroundColor,
     backgroundLighten,
     backgroundDarken,
@@ -38,6 +27,11 @@ const background = {
   )};
     `,
   propTypes: {
+    background: PropTypes.string,
+    backgroundAttachment: PropTypes.oneOf(['scroll', 'fixed']),
+    backgroundImage: PropTypes.string,
+    backgroundPosition: PropTypes.string,
+    backgroundRepeat: PropTypes.string,
     backgroundColor: PropTypes.string,
     backgroundOpacity: PropTypes.number,
     backgroundDarken: PropTypes.number,
