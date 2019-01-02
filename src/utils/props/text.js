@@ -24,7 +24,9 @@ const text = {
   }) => css`
     label: text;
     overflow: ${textOverflow &&
-      (textOverflow === ('clip' || 'ellipsis') ? 'hidden' : textOverflow)};
+      (textOverflow === 'clip' || textOverflow === 'ellipsis'
+        ? 'hidden'
+        : textOverflow)};
     text-overflow: ${textOverflow &&
       ((textOverflow === 'visible' && 'initial') ||
         (textOverflow === 'scroll' && 'ellipsis') ||
